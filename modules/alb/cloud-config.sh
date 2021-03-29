@@ -4,7 +4,9 @@
 yum update -y
 yum install -y awslogs jq aws-cli tar screen
 
-systemctl stop ecs
+#systemctl stop ecs; stop ecs
+if systemctl stop ecs; then echo "ECS stopped"; else stop ecs; fi
+
 
 rm -rf /var/lib/ecs/data/*
 /bin/mkdir -p /var/log/ecs /var/ecs-data /etc/ecs
@@ -15,7 +17,8 @@ ECS_BACKEND_HOST=
 
 EOF
 
-systemctl start ecs
+#systemctl start ecs; start ecs
+if systemctl start ecs; then echo "ECS started"; else start ecs; fi
 
 # Install Filebeat to forward and centralize logs and files 
 sudo -su ec2-user
