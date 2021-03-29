@@ -68,6 +68,7 @@ resource "aws_ecs_service" "test" {
   task_definition = module.ecs.aws_ecs_task_definition  #aws_ecs_task_definition.ghost.arn
   desired_count   = var.service_desired
   iam_role        = module.iam.ecs_service_role
+  scheduling_strategy  = var.scheduling_strategy
 
   load_balancer {
     target_group_arn = module.alb.aws_alb_target_group

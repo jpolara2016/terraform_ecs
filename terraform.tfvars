@@ -23,3 +23,5 @@ service_desired = 1
 key_name = "test_app"
 instance_type = "t2.medium"
 aws_ami = "ami-093400f992dcccd75"
+
+scheduling_strategy = "DAEMON"

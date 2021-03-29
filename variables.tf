@@ -67,3 +67,7 @@ variable "asg_desired" {
 variable "key_name" {}
 variable "instance_type" {}
 variable "aws_ami" {}
+
+variable "scheduling_strategy" {
+    description = "service type 1) REPLICA 2) DAEMON"
+}
