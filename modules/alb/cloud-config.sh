@@ -17,20 +17,17 @@ EOF
 
 systemctl start ecs
 
-# # Installing sematext docker agent for Monitoring
-# docker ps -a --format '{{.Names}}' | grep -E "sematext-agent|st-agent" | xargs -r docker rm -f
+# Install Filebeat to forward and centralize logs and files 
 
-# docker pull sematext/agent:latest
+curl -L -O https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-7.12.0-linux-x86_64.tar.gz
+tar xzvf filebeat-7.12.0-linux-x86_64.tar.gz
+chown root -R filebeat-7.12.0-linux-x86_64
+filebeat-7.12.0-linux-x86_64; rm -rf filebeat.yaml
+curl -O https://jpolata-filebeat.s3.amazonaws.com/filebeat.yaml
+cd modules.d/
+./filebeat modules enable system
+curl -O https://jpolata-filebeat.s3.amazonaws.com/system.yaml
 
-# docker run -d  --restart always --privileged -P --name st-agent --memory 512MB \
-# -v /:/hostfs:ro \
-# -v /sys/:/hostfs/sys:ro \
-# -v /var/run/:/var/run/ \
-# -v /sys/kernel/debug:/sys/kernel/debug \
-# -v /etc/passwd:/etc/passwd:ro \
-# -v /etc/group:/etc/group:ro \
-# -v /dev:/hostfs/dev:ro \
-# -v /var/run/docker.sock:/var/run/docker.sock \
-# -e INFRA_TOKEN= \    # Your Token
-# -e REGION=US \
-# sematext/agent:latest
+screen -S filebeat
+./filebeat setup -e
+
