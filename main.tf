@@ -42,7 +42,6 @@ module "alb" {
   source = "./modules/alb"
 
   vpc_id = module.networking.vpc_id
-  security_groups = [module.networking.security_groups]
   private_subnets = module.networking.private_subnet_id
   public_subnets  = module.networking.public_subnet_id
   application_name = var.application_name

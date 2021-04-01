@@ -106,7 +106,7 @@ resource "aws_route_table_association" "private" {
 
 /* Default Security Group for VPC */
 resource "aws_security_group" "default" {
-  name        = "${var.environment}-default-sg"
+  name        = "${var.environment}-vpc-sg"
   description = "Default security group to allow inbound/outbound from the VPC"
   vpc_id      = aws_vpc.vpc.id
   depends_on  = [aws_vpc.vpc]

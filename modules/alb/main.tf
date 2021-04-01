@@ -39,6 +39,40 @@ resource "aws_security_group" "alb" {
   }
 }
 
+/* Create Security Group for Auto Scaling/Instances */
+resource "aws_security_group" "asg" {
+  name        = "${var.environment}-asg-sg"
+  description = "Default security group to allow inbound/outbound from the VPC"
+  vpc_id      = var.vpc_id
+
+  # allow ingress
+  ingress {
+    from_port         = 22
+    to_port           = 22
+    protocol          = "tcp"
+    cidr_blocks       = ["97.102.162.197/32"]
+  }
+
+  ingress {
+    from_port         = 0
+    to_port           = 65535
+    protocol          = "tcp"
+    security_groups = [aws_security_group.alb.id] 
+  }
+
+  # allow egress of all ports
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Environment = var.environment
+  }
+}
+
 /* Create Target Group for ALB */
 resource "aws_alb_target_group" "test" {
   name     = "test-app-tg"
@@ -127,7 +161,7 @@ data "template_file" "cloud_config" {
 
 /* Create Launch Confifuration for AutoScaling */
 resource "aws_launch_configuration" "app" {
-  security_groups = "${var.security_groups}"
+  security_groups = [aws_security_group.asg.id]
 
   key_name                    = var.key_name
   image_id                    = var.aws_ami != "" ? var.aws_ami : data.aws_ami.stable_coreos.id  #ami-093400f992dcccd75

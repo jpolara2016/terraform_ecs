@@ -17,7 +17,6 @@ variable "asg_desired" {
 }
 
 variable "vpc_id" {}
-variable "security_groups" {}
 variable "private_subnets" {}
 variable "public_subnets" {}
 
