@@ -20,17 +20,20 @@ EOF
 #systemctl start ecs; start ecs
 if systemctl start ecs; then echo "ECS started"; else start ecs; fi
 
-# Install Filebeat to forward and centralize logs and files 
+# Install Filebeat to forward and centralize logs and files
+sudo usermod -a -G docker ec2-user 
 sudo -su ec2-user
 curl -L -O https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-7.12.0-linux-x86_64.tar.gz
 tar xzvf filebeat-7.12.0-linux-x86_64.tar.gz
-sudo chown root -R filebeat-7.12.0-linux-x86_64
-cd filebeat-7.12.0-linux-x86_64; rm -rf filebeat.yml
+sudo chmod 754 -R filebeat-7.12.0-linux-x86_64
+cd filebeat-7.12.0-linux-x86_64; sudo rm -rf filebeat.yml
 sudo curl https://jpolata-filebeat.s3.amazonaws.com/filebeat.yaml -o filebeat.yml
 sudo chown root filebeat.yml
-sudo chmod go-w filebeat.yml
+sudo chmod 755 filebeat.yml
 sudo ./filebeat modules enable system
 sudo curl https://jpolata-filebeat.s3.amazonaws.com/system.yaml -o modules.d/system.yml
+sudo chmod 755 -R *
+sudo chown root -R *
 sudo ./filebeat setup -e
 
 

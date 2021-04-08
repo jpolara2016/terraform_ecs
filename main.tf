@@ -69,6 +69,11 @@ resource "aws_ecs_service" "test" {
   iam_role        = module.iam.ecs_service_role
   scheduling_strategy  = var.scheduling_strategy
 
+  ordered_placement_strategy {
+    type  = "spread"
+    field = "instanceId"
+  }
+
   load_balancer {
     target_group_arn = module.alb.aws_alb_target_group
     container_name   = var.container_name
