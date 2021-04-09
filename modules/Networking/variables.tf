@@ -22,8 +22,10 @@ variable "availability_zones" {
     description = "az"
 }
 
-variable "public_subnet_count" {
+variable "my_ipv4" {
+    description = "Your local ipv4" 
 }
 
-variable "private_subnet_count" {
+variable "destination_ip" {
+    description = "Destination IP / for outside world" 
 }

@@ -122,21 +122,14 @@ resource "aws_security_group" "default" {
     from_port         = 22
     to_port           = 22
     protocol          = "tcp"
-    cidr_blocks       = ["97.102.162.197/32"]
+    cidr_blocks       = var.my_ipv4
   }
 
     ingress {
     from_port         = 80
     to_port           = 80
     protocol          = "tcp"
-    cidr_blocks       = ["0.0.0.0/0"]
-  }
-
-    ingress {
-    from_port         = 5000
-    to_port           = 5000
-    protocol          = "tcp"
-    cidr_blocks       = ["0.0.0.0/0"]
+    cidr_blocks       = var.destination_ip
   }
   
   # allow egress of all ports
@@ -144,7 +137,7 @@ resource "aws_security_group" "default" {
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = var.destination_ip
   }
 
   tags = {

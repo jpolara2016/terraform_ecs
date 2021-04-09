@@ -9,7 +9,7 @@ variable "asg_min" {
 }
 
 variable "asg_max" {
-     default = "Maximum Capacity"
+    default = "Maximum Capacity"
 }
 
 variable "asg_desired" {
@@ -31,4 +31,12 @@ variable "aws_ami" {}
 
 variable "spot_price" {
     description = "Bid Spot instance price" 
+}
+
+variable "my_ipv4" {
+    description = "Your local ipv4" 
+}
+
+variable "destination_ip" {
+    description = "Destination IP / for outside world" 
 }

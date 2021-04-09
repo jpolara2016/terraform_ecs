@@ -9,21 +9,14 @@ resource "aws_security_group" "alb" {
     from_port         = 22
     to_port           = 22
     protocol          = "tcp"
-    cidr_blocks       = ["97.102.162.197/32"]
-  }
-
-    ingress {
-    from_port         = 5000
-    to_port           = 5000
-    protocol          = "tcp"
-    cidr_blocks       = ["0.0.0.0/0"]
+    cidr_blocks       = var.my_ipv4
   }
   
     ingress {
     from_port         = 80
     to_port           = 80
     protocol          = "tcp"
-    cidr_blocks       = ["0.0.0.0/0"]
+    cidr_blocks       = var.destination_ip
   }
 
   # allow egress of all ports
@@ -31,7 +24,7 @@ resource "aws_security_group" "alb" {
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = var.destination_ip
   }
 
   tags = {
@@ -50,7 +43,7 @@ resource "aws_security_group" "asg" {
     from_port         = 22
     to_port           = 22
     protocol          = "tcp"
-    cidr_blocks       = ["97.102.162.197/32"]
+    cidr_blocks       = var.my_ipv4
   }
 
   ingress {
@@ -65,7 +58,7 @@ resource "aws_security_group" "asg" {
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
+    cidr_blocks = var.destination_ip
   }
 
   tags = {
@@ -75,29 +68,17 @@ resource "aws_security_group" "asg" {
 
 /* Create Target Group for ALB */
 resource "aws_alb_target_group" "test" {
-  name     = "test-app-tg"
-  port     = 5000
+  name     = "${var.application_name}-tg"
+  port     = 80
   protocol = "HTTP"
   vpc_id   = var.vpc_id
 }
 
 /* Create ALB */
 resource "aws_alb" "main" {
-  name            = "test-app-alb"
+  name            = "${var.application_name}-alb"
   subnets         = var.public_subnets
   security_groups = [aws_security_group.alb.id]
-}
-
-/* Create ALB Listner : 5000 */
-resource "aws_alb_listener" "front_end" {
-  load_balancer_arn = aws_alb.main.id
-  port              = "5000"
-  protocol          = "HTTP"
-
-  default_action {
-    target_group_arn = aws_alb_target_group.test.id
-    type             = "forward"
-  }
 }
 
 /* Create ALB Listner : 80 */

@@ -3,7 +3,7 @@ variable "region" {
 }
 
 variable "aws_profile" {
-     default = "default"
+    default = "default"
 }
 
 variable "environment" {
@@ -15,15 +15,15 @@ variable "application_name" {
 }
 
 variable "container_name" {
-  description = "Docker Container name e.g. test_app"
+    description = "Docker Container name e.g. test_app"
 }
 
 variable "container_port" {
-  description = "Port number of the container e.g. test_app"
+    description = "Port number of the container e.g. test_app"
 }
 
 variable "image_url" {
-  description = "Docker Image erl e.g. jpolara2016/test_app:latest"
+    description = "Docker Image erl e.g. jpolara2016/test_app:latest"
 }
 
 variable "vpc_cidr" {
@@ -42,14 +42,16 @@ variable "availability_zones" {
     description = "az"
 }
 
-variable "public_subnet_count" {
+variable "my_ipv4" {
+    description = "Your local ipv4" 
 }
 
-variable "private_subnet_count" {
+variable "destination_ip" {
+    description = "Destination IP / for outside world" 
 }
 
 variable "service_desired" {
-  description = "Number of services you want to run"
+    description = "Number of services you want to run"
 }
 
 variable "asg_min" {
@@ -57,7 +59,7 @@ variable "asg_min" {
 }
 
 variable "asg_max" {
-     default = "Maximum Capacity"
+    default = "Maximum Capacity"
 }
 
 variable "asg_desired" {

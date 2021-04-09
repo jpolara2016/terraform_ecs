@@ -13,8 +13,8 @@ module "networking" {
   public_subnets_cidr  = var.public_subnets_cidr
   private_subnets_cidr = var.private_subnets_cidr
   availability_zones   = var.availability_zones
-  public_subnet_count  = var.public_subnet_count
-  private_subnet_count  = var.private_subnet_count
+  my_ipv4 = var.my_ipv4
+  destination_ip = var.destination_ip
 }
 
 /* IAM Module to create Role, Policy, and all type access require for ECS cluster to work */
@@ -34,7 +34,6 @@ module "ecs" {
   image_url = var.image_url
   aws_cloudwatch_log_group_app = module.iam.aws_cloudwatch_log_group_app
 
-  depends_on = [module.networking]
 }
 
 /* ALB Module to create ALB, SG, Listner, Target Group, and Auto Scaling */
@@ -57,8 +56,9 @@ module "alb" {
   instance_type = var.instance_type
   aws_ami = var.aws_ami
   spot_price = var.spot_price
+  my_ipv4 = var.my_ipv4
+  destination_ip = var.destination_ip
 
-  depends_on = [module.ecs]
 }
 
 /* Manage Deployments/Tasks */
@@ -80,5 +80,4 @@ resource "aws_ecs_service" "test" {
     container_name   = var.container_name
     container_port   = var.container_port
   }
-  depends_on = [module.alb]
 }
