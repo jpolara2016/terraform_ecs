@@ -56,6 +56,7 @@ module "alb" {
   aws_iam_instance_profile = module.iam.aws_iam_instance_profile
   instance_type = var.instance_type
   aws_ami = var.aws_ami
+  spot_price = var.spot_price
 
   depends_on = [module.ecs]
 }

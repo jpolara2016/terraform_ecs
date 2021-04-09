@@ -28,3 +28,7 @@ variable "aws_cloudwatch_log_group_ecs" {}
 variable "aws_iam_instance_profile" {}
 
 variable "aws_ami" {}
+
+variable "spot_price" {
+    description = "Bid Spot instance price" 
+}

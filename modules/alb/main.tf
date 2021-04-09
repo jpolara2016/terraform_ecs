@@ -166,6 +166,7 @@ resource "aws_launch_configuration" "app" {
   key_name                    = var.key_name
   image_id                    = var.aws_ami != "" ? var.aws_ami : data.aws_ami.stable_coreos.id  #ami-093400f992dcccd75
   instance_type               = var.instance_type
+  spot_price                  = var.spot_price
   iam_instance_profile        = var.aws_iam_instance_profile
   user_data                   = data.template_file.cloud_config.rendered
   associate_public_ip_address = true

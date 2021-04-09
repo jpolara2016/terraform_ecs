@@ -17,8 +17,10 @@ private_subnet_count = 2
 
 asg_min = 1
 asg_max = 2
-asg_desired = 1
-service_desired = 1
+asg_desired = 2
+spot_price = 0.020
+
+service_desired = 2
 
 key_name = "test_app"
 instance_type = "t2.medium"

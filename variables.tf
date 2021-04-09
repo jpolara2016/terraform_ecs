@@ -71,3 +71,7 @@ variable "aws_ami" {}
 variable "scheduling_strategy" {
     description = "service type 1) REPLICA 2) DAEMON"
 }
+
+variable "spot_price" {
+    description = "Bid Spot instance price" 
+}
