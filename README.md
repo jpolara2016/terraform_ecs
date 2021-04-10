@@ -23,16 +23,25 @@ terraform apply
 ## `Features:`
 
 * Isolated in a VPC
-* High-availability (Multi-AZ deployment)
-    * Public Subnet (Internet access via IG)
-    * Private Subnet (Internet access via NAT Gateway)
-* Route Table for each subnet
-* Loadbalanced (ALB) & Auto-scaling
+    * High-availability (Multi-AZ deployment)
+      * Public Subnet (Internet access via IG)
+      * Private Subnet (Internet access via NAT Gateway)
+    * Route Table for each subnet
+    * NAT Gateway in each public subnet
+* Security
+    * Security Groups for ALB and EC2
+    * Application instances in private subnets
+* Load Balancer (ALB)
+    * Target Group
+    * Listener
+    * Auto-scaling
 * Dynamic Port Mapping
-* Fault-tolerant architecture
 * ECS Cluster
     * Task Definition
     * Service
     * Tasks
-
+* Fault-tolerant architecture
+    * Application update in 0 min downtime when you update ECS service
+* Cost-effective
+    * Use Spot instance with Auto Scaling to save $$$
 
