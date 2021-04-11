@@ -46,6 +46,14 @@ terraform apply
 * Cost-effective
     * Use Spot instance with Auto Scaling to save $$$
   
+  
+---------
+## `Graph:`
+```bash
+terraform graph | dot -Tsvg > graph.svg
+```
+You can open graph.svg in any browser.  
+  
 ---------
 ## `terraform.tfvars:`
 ```json
