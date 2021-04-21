@@ -1,3 +1,12 @@
+/* Store state file in S3 backend */
+terraform {
+  backend "s3" {
+    bucket = "jpolara1-source-bucket"
+    key    = "terraform-ecs/terraform.tfstate"
+    region = "us-east-1"
+  }
+}
+
 /* Provider */
 provider "aws" {
   region  = var.region
